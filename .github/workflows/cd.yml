@@ -30,7 +30,7 @@ jobs:
 
       - id: matrix
         run: |
-          echo "value={"hostname$(echo '${{ vars.DEPLOY_HOSTNAMES}}' | sed 's/\"/\\\"/g')" >> $GITHUB_OUTPUT
+          echo "value=$(echo '${{ vars.DEPLOY_HOSTNAMES}}' | sed 's/\"/\\\"/g')" >> $GITHUB_OUTPUT
 
   deploy:
     name: "Deploy"
