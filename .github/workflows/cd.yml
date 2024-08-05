@@ -24,35 +24,17 @@ jobs:
       hostnames: ${{ steps.matrix.outputs.hostnames }}
 
     steps:
-      - name: Print
-        run: |
-          echo "Deploy hostnames: ${{ vars.DEPLOY_HOSTNAMES }}"
-
       - id: matrix
         run: |
-          # echo "value=$(echo '${{ vars.DEPLOY_HOSTNAMES}}' | sed 's/\"/\\\"/g')" >> $GITHUB_OUTPUT
-          # HOSTNAMES='${{ toJSON(vars.DEPLOY_HOSTNAMES) }}'
           HOSTNAMES='${{ vars.DEPLOY_HOSTNAMES }}'
           echo "hostnames=${HOSTNAMES}" >> $GITHUB_OUTPUT
-
-  test:
-    name: "Test"
-
-    runs-on: ubuntu-latest
-
-    needs: setup
-
-    steps:
-      - name: Print
-        run: |
-          echo "${{ toJSON(needs.setup.outputs.hostnames) }}"
 
   deploy:
     name: "Deploy"
 
     runs-on: ubuntu-latest
 
-    needs: [setup, test]
+    needs: setup
 
     environment: ${{ inputs.environment }}
 
