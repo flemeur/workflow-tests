@@ -57,7 +57,7 @@ jobs:
 
     strategy:
       matrix:
-        hostname: ${{ fromJSON(needs.setup.outputs.hostnames) }}
+        hostname: ${{ needs.setup.outputs.hostnames }}
 
     steps:
       - name: Print
