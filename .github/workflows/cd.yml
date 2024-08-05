@@ -43,7 +43,7 @@ jobs:
 
     strategy:
       matrix:
-        hostname: ${{ vars.DEPLOY_HOSTNAMES }}
+        hostname: ${{ toJSON(vars.DEPLOY_HOSTNAMES) }}
 
     steps:
       - name: Print
