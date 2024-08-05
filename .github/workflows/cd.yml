@@ -31,7 +31,8 @@ jobs:
       - id: matrix
         run: |
           # echo "value=$(echo '${{ vars.DEPLOY_HOSTNAMES}}' | sed 's/\"/\\\"/g')" >> $GITHUB_OUTPUT
-          HOSTNAMES='${{ toJSON(vars.DEPLOY_HOSTNAMES) }}'
+          # HOSTNAMES='${{ toJSON(vars.DEPLOY_HOSTNAMES) }}'
+          HOSTNAMES='${{ vars.DEPLOY_HOSTNAMES }}'
           echo "hostnames=${HOSTNAMES}" >> $GITHUB_OUTPUT
 
   test:
@@ -57,7 +58,7 @@ jobs:
 
     strategy:
       matrix:
-        hostname: ${{ needs.setup.outputs.hostnames }}
+        hostname: ${{ fromJSON(needs.setup.outputs.hostnames) }}
 
     steps:
       - name: Print
