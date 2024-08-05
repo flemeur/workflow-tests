@@ -13,24 +13,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  setup:
-    name: "Setup"
-
-    runs-on: ubuntu-latest
-
-    environment: ${{ inputs.environment }}
-
-    outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
-
-    steps:
-      - name: Print
-        run: |
-          echo "Deploy hostnames: ${{ vars.DEPLOY_HOSTNAMES }}"
-
-      - id: matrix
-        run: |
-          echo "value=$(echo '${{ vars.DEPLOY_HOSTNAMES}}' | sed 's/\"/\\\"/g')" >> $GITHUB_OUTPUT
+  # setup:
+  #   name: "Setup"
+  #
+  #   runs-on: ubuntu-latest
+  #
+  #   environment: ${{ inputs.environment }}
+  #
+  #   outputs:
+  #     matrix: ${{ steps.matrix.outputs.value }}
+  #
+  #   steps:
+  #     - name: Print
+  #       run: |
+  #         echo "Deploy hostnames: ${{ vars.DEPLOY_HOSTNAMES }}"
+  #
+  #     - id: matrix
+  #       run: |
+  #         echo "value=$(echo '${{ vars.DEPLOY_HOSTNAMES}}' | sed 's/\"/\\\"/g')" >> $GITHUB_OUTPUT
 
   deploy:
     name: "Deploy"
@@ -43,7 +43,7 @@ jobs:
 
     strategy:
       matrix:
-        hostname: ${{ fromJSON(needs.setup.outputs.matrix) }}
+        hostname: ${{ vars.DEPLOY_HOSTNAMES }}
 
     steps:
       - name: Print
